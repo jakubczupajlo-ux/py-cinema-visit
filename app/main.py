@@ -4,13 +4,19 @@ from app.people.customer import Customer
 from app.people.cinema_staff import Cleaner
 
 
-def cinema_visit(customers: list, hall_number: int, cleaner: str, movie: str):
+def cinema_visit(
+    customers: list,
+    hall_number: int,
+    cleaner: str,
+    movie: str
+):
     customer_instances = [
         Customer(name=c["name"], food=c["food"]) for c in customers
     ]
 
     cleaner_instance = Cleaner(name=cleaner)
-    hall_instance = CinemaHall(hall_number=hall_number)
+    # Zmieniamy argument na 'number', bo tak teraz nazywa się to w klasie CinemaHall
+    hall_instance = CinemaHall(number=hall_number)
 
     for customer in customer_instances:
         CinemaBar.sell_product(product=customer.food, customer=customer)
