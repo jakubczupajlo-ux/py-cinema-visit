@@ -5,22 +5,23 @@ from app.people.cinema_staff import Cleaner
 
 
 def cinema_visit(
-    customers: list,
-    hall_number: int,
-    cleaner: str,
-    movie: str
-):
-    customer_instances = [
-        Customer(name=c["name"], food=c["food"]) for c in customers
-    ]
+        customers: list[dict],
+        hall_number: int,
+        cleaner: str,
+        movie: str
+) -> None:
+    # Tworzenie instancji personelu i sali
+    cleaner_instance = Cleaner(cleaner)
+    hall_instance = CinemaHall(hall_number)
 
-    cleaner_instance = Cleaner(name=cleaner)
-    # Zmieniamy argument na 'number', bo tak teraz nazywa się to w klasie CinemaHall
-    hall_instance = CinemaHall(number=hall_number)
+    # Tworzenie instancji klientów i sprzedaż produktów w barze
+    customer_instances = []
+    for cust_dict in customers:
+        new_customer = Customer(cust_dict["name"], cust_dict["food"])
+        customer_instances.append(new_customer)
+        CinemaBar.sell_product(new_customer.food, new_customer)
 
-    for customer in customer_instances:
-        CinemaBar.sell_product(product=customer.food, customer=customer)
-
+    # Rozpoczęcie seansu
     hall_instance.movie_session(
         movie_name=movie,
         customers=customer_instances,
