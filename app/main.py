@@ -1,5 +1,5 @@
-from app.bar.bar import CinemaBar
-from app.bar.hall import CinemaHall
+from app.cinema.bar import CinemaBar
+from app.cinema.hall import CinemaHall
 from app.people.customer import Customer
 from app.people.cinema_staff import Cleaner
 
@@ -11,7 +11,7 @@ def cinema_visit(
     movie: str
 ) -> None:
     cleaner_instance = Cleaner(cleaner)
-    hall_instance = CinemaHall(hall_number)
+    hall_instance = CinemaHall(number=hall_number)
     bar_instance = CinemaBar()
 
     customer_instances = []
